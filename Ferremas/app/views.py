@@ -97,9 +97,11 @@ def load_subcategorias(request):
 
 def lista_productos(request):
     productos = Producto.objects.all()
-    # Obtener la cantidad total de productos en el carrito
-    total_cantidad = Carrito.objects.filter(usuario=request.user).aggregate(total=models.Sum('cantidad'))['total']
-    return render(request, 'productos.html', {'productos': productos, 'total_cantidad': total_cantidad})
+    if request.user.is_authenticated:
+        cantidad_compras = Carrito.objects.filter(usuario=request.user).aggregate(total=models.Sum('cantidad'))['total']
+    else:
+        cantidad_compras = 0
+    return render(request, 'productos.html', {'productos': productos, 'cantidad_compras': cantidad_compras})
 
 
 

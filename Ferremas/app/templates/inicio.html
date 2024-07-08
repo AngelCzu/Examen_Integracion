@@ -1,11 +1,51 @@
-{% extends "./base.html" %}
+{% extends "base.html" %}
 
 {% load static %}
 
 {% block head %}
-
+<link rel="stylesheet" href="{% static 'css/inicio.css' %}">
 <title>Inicio</title>
-
+<style>
+  .modal {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 200; /* Asegura que el modal esté por encima del sidebar */
+  }
+  .modal-content {
+      background-color: var(--sidebar-color);
+      padding: 20px;
+      border-radius: 5px;
+      text-align: center;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      color: var(--text-color);
+      width: 300px; /* Ancho del recuadro pequeño */
+  }
+  .modal-buttons {
+      margin-top: 20px;
+  }
+  .modal-buttons button {
+      padding: 10px 20px;
+      margin: 0 10px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+  }
+  .btn-confirm {
+      background-color: #4CAF50;
+      color: white;
+  }
+  .btn-cancel {
+      background-color: #f44336;
+      color: white;
+  }
+</style>
 {% endblock %}
 
 {% block body %}
@@ -14,13 +54,13 @@
       
   
     <section class="w-50 mx-auto text-center pt-5" id="intro">
-      <h1 style="color: rgb(6, 171, 22)">Plantando Sueños</h1>
+      <h1 style="color: rgba(139,31,46,255)">Plantando Sueños</h1>
       <h1 class="p-3 fs-2 border-top border-2">
         ¡Bienvenidos a nuestra página de
-        <span style="color: rgb(6, 171, 22)">Jardinería!</span>
+        <span style="color: rgba(139,31,46,255)">Jardinería!</span>
       </h1>
       <p class="p-3 fs-6">
-        En <span style="color: rgb(6, 171, 22)">SweetGarden</span> encontrarás
+        En <span style="color: rgba(139,31,46,255)">SweetGarden</span> encontrarás
         todo lo que necesitas saber para crear y mantener un hermoso jardín en
         tu hogar. La jardinería es una actividad que puede ser muy gratificante
         y relajante, además de ser una excelente manera de conectarse con la
@@ -33,7 +73,7 @@
       <div class="row">
         <div class="col mt-4 pt-5 pb-5">
           <i class="fa-solid fa-book display-5 pb-3"></i>
-          <h3 style="color: rgb(6, 171, 22)" >Desarrollo Avanzado</h3>
+          <h3 style="color: rgba(139,31,46,255)" >Desarrollo Avanzado</h3>
           <p>
             Productos de alta calidad, ampliamente utilizados y validados en
             jardines y la industria agrícola.
@@ -42,7 +82,7 @@
   
         <div class="col mt-4 pt-5 pb-5">
           <i class="fa-solid fa-leaf display-5 pb-3"></i>
-          <h3 style="color: rgb(6, 171, 22)" >Plantas mas Sanas</h3>
+          <h3 style="color: rgba(139,31,46,255)" >Plantas mas Sanas</h3>
           <p>
             Sin amarillamiento de hojas, necrosis, hongos y desordenes
             fisiológicos que causan pudrición de las raíces.
@@ -50,7 +90,7 @@
         </div>
         <div class="col mt-4 pt-5 pb-5">
           <i class="fa-solid fa-globe display-5 pb-3"></i>
-          <h3 style="color: rgb(6, 171, 22)" >Para todo el uso</h3>
+          <h3 style="color: rgba(139,31,46,255)" >Para todo el uso</h3>
           <p>
             Productos para las áreas de jardinería, viveros, proyectos de
             paisajismo, incluso un proyecto personal de jardín
@@ -65,7 +105,7 @@
   
       <span class="info-Quehacemo">
         
-        <h1 style="color: rgb(6, 171, 22)" >Vendemos los mejores productos de jardineria</h1>
+        <h1 style="color: rgba(139,31,46,255)" >Vendemos los mejores productos de jardineria</h1>
         <br/>
         <p>
           Nuestra pagina se especializa en la venta de productos de la mejor
@@ -92,7 +132,7 @@
     <div class="container-fluid text-center" >
       <div class="row">
         <div class="col mt-4 pt-5 pb-5">
-          <h1 style="color: rgb(6, 171, 22)">Ubicado en Santiago, Chile</h1>
+          <h1 style="rgba(139,31,46,255)">Ubicado en Santiago, Chile</h1>
         <br />
         <p>
           Elegimos Santiago para nuestra sucursal con el objetivo de estar cerca de nuestros clientes, estamos ubicados Macul, cerca de los mejores restaurantes, tiendas y parques, y tan solo a 15 minutos de una espectacular piscina. ¡Visitenos y no se arrepentiran!
@@ -100,12 +140,42 @@
         <p>nos puedes contactar o encontrar tambien!</p>
         <p>llamanos al: +56 9289 9192</p>
         
-        
-    </div>
+        <div id="Clima">
+          <h4 id="resultDolar">Clima: </h4>
+          <h4 id="resultDolar2">Descripción: </h4>
+          <h4 id="resultDolar3"> La temperatura es: </h4>
+          <h4 id="resultDolar4"></h4>
+          <h4 id="resultDolar5"></h4>
+          <h4 id="resultDolar6"></h4>
+          <h4 id="resultDolar7"></h4>
+      </div>
+        </div>
   
+        <div class="col pb-2 " id="mapa">
+          
+           <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d53262.28925476311!2d-70.6935409844393!3d-33.45209207784555!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9662d0069af23abb%3A0x879d59f409ed4897!2sSantiago%2C%20Regi%C3%B3n%20Metropolitana!5e0!3m2!1ses!2scl!4v1680408793706!5m2!1ses!2scl"
+          style="border: 0; width: 100%; height: 100%;"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+        ></iframe> 
         
+        </div>
+      </div>
+    </div>
+   
 
-
+    
+    <div class="modal" id="announcement">
+      <div class="modal-content">
+          <p>¿Deseas comer unas ricas hamburguesas? Podrás econtrarlo en la página Spart Sagan</p>
+          <div class="modal-buttons">
+              <button class="btn-confirm" onclick="redirect()">Sí</button>
+              <button class="btn-cancel" onclick="closeModal()">Cancelar</button>
+          </div>
+      </div>
+  </div>
 
   </body>
   <!-- Fin Tienda --> 
@@ -114,5 +184,19 @@
 {% block script %}
 <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
 <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
+<script src="{% static 'js/Clima.js' %}"></script>
+<script>
+  window.onload = function() {
+      document.getElementById('announcement').style.display = 'flex';
+  };
+
+  function redirect() {
+      window.location.href = "http://186.64.123.144";
+  }
+
+  function closeModal() {
+      document.getElementById('announcement').style.display = 'none';
+  }
+</script>
 
 {% endblock %}
