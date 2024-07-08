@@ -1,0 +1,147 @@
+/* Estilos generales */
+img {
+  border-radius: 75%;
+}
+
+.card {
+  border: none;
+  box-shadow: 5px 20px 50px #000;
+}
+
+/* Contenedores específicos */
+.contenedorP {
+  flex: 1;
+  display: contents;
+  padding: 20px;
+}
+
+/* Estilos de las tarjetas */
+.contenedorP .card {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+  height: 550px;
+  background: #232323;
+  color: white;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.contenedorP .card:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #aeafb2;
+  clip-path: circle(150px at 80% 20%);
+  transition: 0.5s ease-in-out;
+}
+
+.contenedorP .card:hover:before {
+  clip-path: circle(300px at 80% -20%);
+}
+
+.contenedorP .card .imgProducto {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 100;
+  width: 100%;
+  height: 220px;
+  transition: 0.5s;
+}
+
+.contenedorP .card:hover .imgProducto {
+  top: 0%;
+  transform: translateY(25%);
+}
+
+.contenedorP .card .imgProducto img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-30%, -70%);
+  width: 220px;
+}
+
+.contenedorP .card .contenidoCard {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 100px;
+  text-align: center;
+  transition: 0.5s;
+}
+
+.contenedorP .card:hover .contenidoCard {
+  height: 270px;
+}
+
+.contenedorP .card .contenidoCard .size,
+.contenedorP .card .contenidoCard .color {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 8px 20px;
+  transition: 0.5s;
+  opacity: 0;
+  visibility: hidden;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.contenedorP .card:hover .contenidoCard .size {
+  opacity: 1;
+  visibility: visible;
+  transition-delay: 0.5s;
+}
+
+.contenedorP .card:hover .contenidoCard .color {
+  opacity: 1;
+  visibility: visible;
+  transition-delay: 0.6s;
+}
+
+.row {
+  width: 100%;
+}
+
+.col {
+  min-width: 300px;
+  max-width: 300px;
+}
+
+.contenedorP .card .nombreprduc {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  transition: all 0.3s ease;
+}
+
+.contenedorP .card:hover .nombreprduc {
+  white-space: normal;
+}
+
+/* Nueva clase para limitar la descripción */
+.contenedorP .card .product-description {
+  font-size: 0.9em;
+  color: #666;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* Número de líneas a mostrar */
+  -webkit-box-orient: vertical;
+  height: 2.4em; /* Altura = número de líneas * línea-altura (ajusta según sea necesario) */
+}
+
+.contenedorP .card .nombreprduc {
+  font-size: 0.9em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* Número de líneas a mostrar */
+  -webkit-box-orient: vertical;
+  height: 2.4em; /* Altura = número de líneas * línea-altura (ajusta según sea necesario) */
+}

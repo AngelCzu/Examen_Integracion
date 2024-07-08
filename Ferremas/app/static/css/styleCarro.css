@@ -1,0 +1,116 @@
+/* Estilos del carrito */
+.carrito {
+  border: 1px solid #666;
+  width: auto;
+  max-width: 80%;
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 9999;
+  border-radius: 10px;
+  overflow: hidden;
+  transition: .3s;
+  margin-right: 0;
+  opacity: 1;
+}
+
+#btnDropdown {
+  align-items: center;
+  text-align: center;
+  position: absolute;
+  margin-left: 100%;
+}
+
+.carrito-flotante {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000 !important;
+}
+
+.carrito-boton {
+  background-color: rgb(6, 171, 22);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  font-size: 20px;
+  cursor: pointer;
+  position: relative;
+}
+
+.carrito-boton i {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+#cantidadCarrito {
+  background-color: red;
+  color: white;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  text-align: center;
+  position: absolute;
+  top: -1px;
+  right: -1px;
+  font-size: 11px;
+}
+
+/* Estilos del offcanvas */
+.offcanvas-body {
+  flex-direction: column;
+  background-color: var(--primary-color-light);
+  transition: var(--tran-05);
+}
+
+.offcanvas-header {
+  background-color: var(--primary-color-light);
+  color: var(--text-color);
+  transition: var(--tran-05);
+}
+
+.btn-close {
+  background-color: var(--primary-color-light);
+  transition: var(--tran-05);
+}
+
+.modal-header{
+  border-color: var(--body-color);
+}
+
+.modal-footer{
+  border-color: var(--body-color);
+}
+
+.btn-close{
+  background-color: var(--toggle-color);
+
+}
+
+.btn-light-modal{
+  background-color: rgb(6, 171, 22);
+}
+
+.btn-light-modal:hover{
+  
+  background-color: rgb(8, 128, 20);
+}
+
+.modal-content {
+  background-color: var(--body-color);
+  color: var(--text-color);
+  transition: var(--tran-05);
+  justify-content: center;
+}
+
+.total-content {
+  color: var(--text-color);
+  transition: var(--tran-05);
+  margin: 2%;
+}
+
+

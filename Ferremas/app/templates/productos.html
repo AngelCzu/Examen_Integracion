@@ -1,0 +1,161 @@
+{% extends "./inicio.html" %}
+
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/baseTienda.css' %}">
+<link rel="stylesheet" href="{% static 'css/styleCarro.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<title>Tienda</title>
+{% endblock %}
+
+{% block body %}
+<!-- Inicio Tienda -->
+
+{% if user.is_authenticated %}
+    <!-- Agregar el botón flotante del carrito -->
+    <div id="carritoFlotante" class="carrito-flotante">
+        <a href="{% url 'ver_carrito' %}"> <!-- Aquí colocas la URL de la página a la que quieres redirigir -->
+            <button id="carritoBoton" class="carrito-boton">
+                <i class="bi bi-cart"></i>
+                <span id="cantidadCarrito">{{ cantidad_compras }}</span> <!-- Aquí se mostrará la cantidad en un círculo -->
+            </button>
+        </a>
+    </div>
+{% endif %}
+
+<div id="contenedor-items" class="contenedor-items">
+  <div class="contenedorProductos">
+      <div class="text">
+          <h1><strong>PRODUCTOS</strong></h1>
+      </div>
+      <!-- PRODUCTOS -->
+      <div id="productos" class="container text-center">
+        <div class="row">
+            {% for p in productos %}
+            <div class="col">
+              <div class="contenedorP">
+                  <div class="card ms-5 m-4">
+                      <div class="imgProducto">
+                          <img class="img-fluid" src="{{ p.imagen.url }}">
+                      </div>
+                      <div class="contenidoCard">
+                          <h3><strong class="nombreprduc">{{ p.nombre }}</strong></h3>
+                          <h5><small class="product-description">{{ p.descripcion }}</small></h5>
+                          <p class="price">
+                              <i class="bi bi-currency-dollar"></i>{{ p.precio }}
+                          </p>
+                          {% if user.is_authenticated %}
+                              <form method="post" class="comprar-form" data-sku="{{ p.sku }}" style="padding-top: 26px;">
+                                  {% csrf_token %}
+                                  <button type="submit" class="btn btn-light">Comprar</button>
+                              </form>
+                          {% else %}
+                              <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                  Comprar
+                              </button>
+                              <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                  <div class="modal-dialog">
+                                      <div class="modal-content">
+                                          <div class="modal-header">
+                                              <h5 class="modal-title" id="exampleModalLabel">¡Debe registrarse para comprar!</h5>
+                                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                          </div>
+                                          <div class="modal-body">
+                                              Para realizar una compra, por favor regístrese en nuestro sitio.
+                                          </div>
+                                          <div class="modal-footer">
+                                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                              <a href="{% url 'login_registro' %}" class="btn btn-light-modal">Registrarse</a>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                          {% endif %}
+                      </div>
+                  </div>
+              </div>
+            </div>
+            {% endfor %}
+        </div>
+      </div>
+  </div>
+</div>
+<div id="notification-container" class="notification-container"></div>
+<!-- Fin Tienda -->
+{% endblock %}
+
+{% block script %}
+<!-- Contenedor para notificaciones -->
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function() {
+    $('.comprar-form').on('submit', function(event) {
+        event.preventDefault();
+        var sku = $(this).data('sku');
+        var form = $(this);
+
+        $.ajax({
+            url: "{% url 'comprar_producto' %}",
+            type: 'POST',
+            data: {
+                'sku': sku,
+                'csrfmiddlewaretoken': '{{ csrf_token }}'
+            },
+            success: function(response) {
+                if (response.status === 'success') {
+                    showNotification(response.message);
+                    updateCartQuantity(response.total_cantidad);
+                } else {
+                    showNotification(response.message, 'error');
+                }
+            }
+        });
+    });
+});
+
+// Función para mostrar notificaciones
+function showNotification(message, type = 'success') {
+    var notificationContainer = $('#notification-container');
+    var notification = $('<div class="notification ' + type + '">' + message + '</div>');
+
+    notificationContainer.append(notification);
+
+    setTimeout(function() {
+        notification.fadeOut(300, function() {
+            $(this).remove();
+        });
+    }, 3000); // Tiempo de espera antes de desaparecer (3 segundos)
+}
+
+// Función para actualizar la cantidad del carrito
+function updateCartQuantity(quantity) {
+    $('#cantidadCarrito').text(quantity);
+}
+</script>
+
+<style>
+.notification-container {
+    position: fixed;
+    top: 5%;
+    left: 52.5%;
+    transform: translate(-50%, -50%);
+    z-index: 1000;
+}
+
+.notification {
+    background-color: #28a745;
+    color: white;
+    padding: 10px 20px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.notification.error {
+    background-color: #dc3545;
+}
+</style>
+{% endblock %}

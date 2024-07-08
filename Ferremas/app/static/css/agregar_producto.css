@@ -1,0 +1,143 @@
+ /* Variables de color */
+ :root {
+    --background-color: #f8f9fa;
+    --text-color: #343a40;
+    --input-border-color: #ced4da;
+    --input-focus-border-color: #80bdff;
+    --input-background-color: #ffffff;
+    --button-background-color: #007bff;
+    --button-hover-background-color: #0056b3;
+    --error-color: #dc3545;
+    --success-color: #28a745;
+    --input-border-radius: 8px;
+    --input-padding: 12px;
+    --input-font-size: 16px;
+    --input-width: 100%;
+}
+
+/* Modo oscuro */
+body.dark {
+    --background-color: #1e1e1e;
+    --text-color: #ffffff;
+    --input-border-color: #444444;
+    --input-focus-border-color: #80bdff;
+    --input-background-color: #2e2e2e;
+    --button-background-color: #0056b3;
+    --button-hover-background-color: #004085;
+    --error-color: #dc3545;
+    --success-color: #28a745;
+}
+
+/* Contenedor principal */
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: var(--background-color);
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Encabezado del formulario */
+h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: var(--text-color);
+}
+
+/* Estilos del formulario */
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+form .form-group {
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+form .form-group label {
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: var(--text-color);
+}
+
+form .form-group input,
+form .form-group select,
+form .form-group textarea {
+    padding: var(--input-padding);
+    border: 1px solid var(--input-border-color);
+    border-radius: var(--input-border-radius);
+    width: var(--input-width);
+    box-sizing: border-box;
+    font-size: var(--input-font-size);
+    background-color: var(--input-background-color);
+    color: var(--text-color);
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+form .form-group input:focus,
+form .form-group select:focus,
+form .form-group textarea:focus {
+    border-color: var(--input-focus-border-color);
+    box-shadow: 0 0 5px rgba(128, 189, 255, 0.5);
+    outline: none;
+}
+
+form p{
+    display: flex;
+    flex-direction: column;
+}
+form button[type="submit"] {
+    padding: 12px 20px;
+    background-color: var(--button-background-color);
+    border: none;
+    border-radius: var(--input-border-radius);
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+form button[type="submit"]:hover {
+    background-color: var(--button-hover-background-color);
+}
+
+/* Estilos para mensajes de error */
+.form-error {
+    color: var(--error-color);
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+.form-success {
+    color: var(--success-color);
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+/* Estilos para elementos de imagen */
+.form-group img {
+    max-width: 100%;
+    height: auto;
+    margin-top: 10px;
+    border-radius: var(--input-border-radius);
+}
+
+/* Media queries para responsividad */
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+
+    form .form-group input,
+    form .form-group select,
+    form .form-group textarea {
+        font-size: 14px;
+    }
+
+    form button[type="submit"] {
+        font-size: 14px;
+    }
+}

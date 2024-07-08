@@ -1,0 +1,61 @@
+{% extends "./baseInicio.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-aFq/bzH65dt+w6FI2ooMVUpc+21e0SRygnTpmBvdBgSdnuTN7QbdgL+OapgHtvPp" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    {% block head %}
+    <link rel="stylesheet" href="{% static 'css/nosotros.css' %}">
+    <title>Nosotros</title>
+    {% endblock %}
+    
+    <title>Document</title>
+</head>
+<body>
+  {% block body %}
+
+    <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <img src="static/img/imgsInicio/jardineria1.jpg" class="d-block w-100 d-img" alt="...">
+            <div class="carousel-caption top-0 mt-4">
+                <p class="mt-5 fs-4 text-uppercase">SweetGarden</p>
+                <h1 class="display-1 fw-bolder text-capitalize">Nosotros</h1>
+              </div>
+          </div>
+        </div>
+      </div>
+
+
+      <section class="w-50 mx-auto text-center pt-5" id="intro">
+        <h1 class="p-3 fs-2 border-top border-2" style="color:#ccc">
+          
+          <span style="color: rgb(6, 171, 22)">SweetGarden</span> 
+          es una Comunidad de vecinos que vende productos de jardinería para apoyar a una fundación sin fines de lucro.
+        </h1>
+        <p class="p-3 fs-6" style="color:#ccc">
+            nos complace ser una comunidad de vecinos dedicada a ayudar a una 
+          fundación sin fines de lucro mediante la venta de productos para jardinería. Al principio, todo comenzó a través de las redes sociales,
+           pero ahora, nos hemos dado cuenta de que la demanda ha crecido tanto que es casi imposible dar abasto a través de este medio.<br> <br>
+          Es maravilloso poder contribuir a una buena causa, y ver cómo nuestros productos para jardinería han sido bien recibidos 
+          por la comunidad. Ofrecemos una variedad de productos, desde maceteros y tierra de hojas hasta flores y arbustos. 
+          Todo lo que vendemos es de alta calidad y ha sido cuidadosamente seleccionado para asegurarnos de que nuestros 
+          clientes estén satisfechos con su compra. <br>
+          Nuestro objetivo es seguir creciendo y expandiéndonos para poder satisfacer la creciente demanda. Estamos buscando nuevas formas de
+           llegar a más clientes y asegurarnos de que nuestras entregas sean rápidas y confiables. Nos enorgullece saber que estamos 
+           haciendo una diferencia positiva en la comunidad y en la vida de las personas que apoyamos con nuestros productos.
+        </p>
+      </section>
+
+
+
+    
+    {% endblock %}
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.min.js" integrity="sha384-heAjqF+bCxXpCWLa6Zhcp4fu20XoNIA98ecBC1YkdXhszjoejr5y9Q77hIrv8R9i" crossorigin="anonymous"></script>
+</body>
+</html>

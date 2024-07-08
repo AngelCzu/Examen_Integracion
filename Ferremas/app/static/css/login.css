@@ -1,0 +1,218 @@
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    font-family: "Jost", sans-serif;
+    background:rgb(255, 255, 255);
+  }
+.contenedorP{
+    width: 450px;
+    height: 585px;
+    background: rgb(255, 255, 255);
+    overflow: hidden;
+    border-radius: 10px;
+    box-shadow: 5px 20px 50px #000;
+}
+
+#chk {
+    display: none;
+  }
+
+.registro {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+#txtLabelReg{
+    color: black;
+    font-size: 2.3rem;
+    justify-content: center;
+    display: flex;
+    margin: 30px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.5s ease-in-out;
+}
+
+#txtLabelIng{
+    color: black;
+    font-size: 2.3rem;
+    justify-content: center;
+    display: flex;
+    margin-top: 50px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.5s ease-in-out;
+}
+
+input {
+    background: #e0dede;
+    justify-content: center;
+    display: flex;
+    margin: 10px auto;
+    
+}
+
+button {
+    width: 60%;
+    height: 40px;
+    margin: 10px auto;
+    justify-content: center;
+    display: block;
+    color: #ffffff;
+    background: #0dcaf0;
+    font-size: 1em;
+    font-weight: bold;
+    transition: 0.2s ease-in;
+    cursor: pointer;
+}
+
+.login {
+    height: 580px;
+    background: #f3f2f2;
+    border-radius: 70% / 10%;
+    transform: translateY(-170px);
+    transition: 0.8s ease-in-out;
+  }
+
+#txtLabelIng {
+    color: #000000;
+    transform: scale(0.5);
+}
+
+#chk:checked ~ .login {
+    transform: translateY(-650px);
+  }
+  #chk:checked ~ .login #txtLabelIng {
+    transform: scale(1);
+  }
+  #chk:checked ~ .registro #txtLabelReg {
+    transform: scale(0.5);
+  } 
+
+.container-fullname{
+    display: flex;
+}
+
+.name{
+    width: 50%;
+}
+
+.lastname{
+    width: 50%;
+}
+
+.form-label{
+    color: #000000;
+    justify-content: center;
+    display: flex;  
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.5s ease-in-out;
+}
+
+.form-control{
+    width: 80%;
+    justify-content: center;
+    display: flex;
+}
+
+#txtPasswordReg{
+    width: 60%;
+    justify-content: center;
+    display: flex;
+}
+
+.contenedorPass{
+    justify-content: center;
+    display: flex;
+    align-items: center ;
+    flex-direction: row;
+}
+
+.btn{
+    width: 60%;
+    height: 40px;
+    justify-content: center;
+    display: block;
+    font-size: 1em;
+    font-weight: bold;
+    transition: 0.2s ease-in;
+}
+
+.miniNavbar{
+    margin-left: 5%;
+    margin-right: 5%;
+    justify-content: space-between;
+    display: flex;  
+    align-items: center;
+    font-weight: bold;
+    transition: 0.5s ease-in-out;
+}
+
+#buttonHome{
+    width: 40% !important;
+    font-weight: bold;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+}
+
+#buttonTheme{
+    width: 25% !important;
+    font-weight: bold;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+}
+
+.input-group{
+    width: 80%;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    margin: 10px auto;
+}
+
+.input-group-text, span{
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    margin: 10px auto;
+    cursor: pointer;
+    border-bottom-left-radius: 5px !important;
+    border-top-left-radius: 5px !important;
+}
+
+#houseIcon{
+    color: #000;
+}
+#toggleDark{
+    cursor: pointer;
+}
+
+#buttonTxtReg{
+    color: white;
+}
+
+#buttonTxtIng{
+
+    border: none;
+    color: white;
+}
+
+#txtNomUsuReg-error,
+#txtCorreoReg-error,
+#txtPasswordReg-error,
+#txtUsuIng-error,
+#txtPasswordIng-error{
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    font-size: x-small;
+    color: rgb(219, 24, 24);
+}

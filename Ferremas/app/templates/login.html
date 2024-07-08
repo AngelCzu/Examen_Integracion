@@ -1,0 +1,116 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}">
+    <link rel="icon" href="#">
+    <title>Login</title>
+</head>
+<body>
+    <div class="contenedorP" id="contenedorPrincipalBody">
+
+        <!-- BOTONES DE ARRIBA, HOME Y THEME -->
+        <div class="miniNavbar mt-2">
+            <a href="inicio" id="houseIcon"><i class="bi bi-house-fill"></i></a>
+            <i class="bi bi-brightness-high-fill" id="toggleDark"></i>
+        </div>
+
+        <!-- IMPORTANTE PARA CAMBIAR DE "VISTA" DE REGISTRO A LOGIN -->
+        <input type="checkbox" id="chk" aria-hidden="true">
+
+        <!-- REGISTRO Y SUS COMPONENTES -->
+            <div class="registro" id="contenedorReg">
+                <form id="formLogin" action="" method="POST">
+                    {% csrf_token %}
+
+                    {% if error %}
+                    <small class="text-danger" style="justify-content: center; display: flex;" id="usuario-error">{{error}}</small>
+                    {% endif %}
+
+
+                    
+
+
+                    <label for="chk" id="txtLabelReg" aria-hidden="true">Ingresar</label>
+
+                        <label for="txtUsuIng"  class="form-label" id="labelTxtUsuIng"><i class="bi bi-person-fill me-1"></i>Usuario</label>
+                        <input id="txtUsuIng" name="txtUsuIng" type="text" class="form-control" aria-describedby="emailHelp" placeholder="Ingrese su nombre de usuario" required>
+                        
+                        <label for="txtPasswordIng" class="form-label" id="labelTxtPassIng"><i class="bi bi-lock-fill me-1"></i>Contraseña</label>
+
+                        <div class="input-group     ">
+                            <input id="txtPasswordIng" name="txtPasswordIng" type="password" class="form-control me-2" placeholder="Ingrese su contraseña" required>
+    
+                            <span onclick="passwordIngresar()" class="input-group-text" id="showPass">
+                                <i class="bi bi-eye-slash-fill" id="ocultarIng"></i>
+                                <i class="bi bi-eye-fill" id="mostrarIng"></i></span>
+                        </div>
+                        <label id="txtPasswordIng-error" class="error" for="txtPasswordIng"></label>
+                        
+                        <button type="submit" class="btn btn-info" id="buttonTxtIng">Ingresar</button>
+                </form>
+                
+            </div>
+
+            <!-- LOGIN Y SUS COMPONENTES -->
+            <div class="login" id="contenedorIng"> 
+                <form id="formReg" action="" method="POST">
+                    {% csrf_token %}
+                    <label for="chk" id="txtLabelIng" aria-hidden="true">Registrarse</label>
+                    <div class="container-fullname">
+                        <div class="name">
+                            <label for="txtNomUsuReg" class="form-label" id="labelTxtNomUsu"><i class="bi bi-person-fill me-1"></i>Nombre</label>
+                            <input id="txtNomUsuReg" name="txtNomUsuReg" type="text" class="form-control"  aria-describedby="emailHelp" style="width: 85%;" placeholder="Ingrese un nombre" required>
+                        </div>
+                        <div class="lastname">
+                            <label for="txtApeUsuReg" class="form-label" id="labelTxtApeUsu"><i class="bi bi-person-fill me-1"></i>Apellido</label>
+                            <input id="txtApeUsuReg" name="txtApeUsuReg" type="text" class="form-control"  aria-describedby="emailHelp" style="width: 85%;" placeholder="Ingrese un apellido" required>
+                        </div>    
+                    </div>
+                    <label for="txtCorreoReg" class="form-label" id="labelTxtCorreo"><i class="bi bi-envelope-fill me-1"></i>Correo</label>
+                    <input id="txtCorreoReg" name="txtCorreoReg" type="email" class="form-control" placeholder="Ingrese su correo" required>
+
+                    <label for="txtDirecReg" class="form-label" id="labelTxtDirecReg"><i class="bi bi-geo-alt-fill"></i>Direccion</label>
+                    <input id="txtDirecReg" name="txtDirecReg" type="text" class="form-control" placeholder="Ingrese su direccion" required>
+
+                    <label for="txtNumReg" class="form-label" id="labelTxtNumReg"><i class="bi bi-phone-fill"></i>Numero de teléfono</label>
+                    <input id="txtNumReg" name="txtNumReg" type="text" class="form-control" placeholder="Ingrese su numero de telefono" required>
+
+                   
+                    
+                    <label id="txtPasswordReg-error" class="error" for="txtPasswordReg"></label>
+                    <label for="txtPasswordReg"  class="form-label" id="labelTxtPassReg"><i class="bi bi-lock-fill me-1"></i>Contraseña</label>
+                    <div class="input-group has-validation">
+                        
+                        <input id="txtPasswordReg" name="txtPasswordReg" type="password" class="form-control me-2" placeholder="Ingrese una contraseña" required>
+
+                        <span onclick="passwordRegistro()" class="input-group-text" id="showPass">
+                            <i class="bi bi-eye-slash-fill" id="ocultarReg"></i>
+                            <i class="bi bi-eye-fill" id="mostrarReg"></i></span>
+                    </div>
+
+
+                    <button type="submit" class="btn btn-info" id="buttonTxtReg">Registrarse</button>
+                </form>
+                
+            </div>
+    </div>  
+    
+</body>
+
+<!-- Fire Base -->
+
+
+<!-- Fin Frie Base -->
+
+<script src="{% static 'js/jquery-3.6.4.min.js' %}"></script>
+<script src="{% static 'js/jquery.validate.min.js' %}"></script>
+<script src="{% static 'js/login.js' %}"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.7/dist/umd/popper.min.js" integrity="sha384-zYPOMqeu1DAVkHiLqWBUTcbYfZ8osu1Nd6Z89ify25QV9guujx43ITvfi12/QExE" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js" integrity="sha384-Y4oOpwW3duJdCWv5ly8SCFYWqFDsfob/3GkgExXKV4idmbt98QcxXYs9UoXAB7BZ" crossorigin="anonymous"></script>
+</html>

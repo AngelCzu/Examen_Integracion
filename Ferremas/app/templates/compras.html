@@ -1,0 +1,110 @@
+{% extends "./inicio.html" %}
+
+{% load static %}
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'css/compras.css' %}">
+<title>Compras</title>
+{% endblock %}
+
+{% block body %}
+<!-- Inicio Carrito -->
+
+{% if total < 1 %}
+    <div class="container">
+        <h3>No tienes nada en tu carro</h3>
+        <h4>Ve a la tienda para agregar cosas a tu carro</h4>
+        <a href="{% url 'lista_productos' %}">
+            <button id="carritoBoton" class="carrito-boton">
+                <i class="bi bi-cart"></i>
+                <span id="cantidadCarrito">0</span>
+            </button>
+        </a>
+    </div>
+{% else %}
+    <div class="cart-container">
+        <div class="cart-item">
+            {% for item in productos_usuario %}
+            <div class="item" data-sku="{{ item.producto.sku }}">
+                <img src="{{ item.producto.imagen.url }}" alt="">
+                <div class="cart-item-details" style="width: 100%; display: flex; flex-direction: column; justify-content: center;">
+                    <h3>{{ item.producto.nombre }}</h3>
+
+                    <div class="quantity-control">
+                        <button class="btn-resta" data-sku="{{ item.producto.sku }}">-</button>
+                        <span class="cantidad">{{ item.cantidad }}</span>
+                        <button class="btn-suma" data-sku="{{ item.producto.sku }}">+</button>
+                    </div>
+                </div>
+                <div class="precio"><span><strong>{{ item.producto.precio }}</strong> CLP</span></div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="cart-summary">
+            <h3>Resumen</h3>
+            {% if total == 1 %}
+                <p>{{ total }} producto</p>
+            {% else %}
+                <p>{{ total }} productos</p>
+            {% endif %}
+            <h4>Total: <span id="total_precio">{{ total_precio }} CLP</span></h4>
+            
+        </div>
+    </div>
+{% endif %}
+
+{% endblock %}
+
+{% block script %}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function() {
+    $('.btn-suma').on('click', function() {
+        var sku = $(this).data('sku');
+
+        $.ajax({
+            url: "{% url 'sumar_producto' %}",
+            type: 'POST',
+            data: {
+                'sku': sku,
+                'csrfmiddlewaretoken': '{{ csrf_token }}'
+            },
+            success: function(response) {
+                if (response.status === 'success') {
+                    var item = $('.item[data-sku="' + sku + '"]');
+                    var cantidadSpan = item.find('.cantidad');
+                    cantidadSpan.text(parseInt(cantidadSpan.text()) + 1);
+                    $('#total_precio').text(response.total_precio + ' CLP');
+                }
+            }
+        });
+    });
+
+    $('.btn-resta').on('click', function() {
+        var sku = $(this).data('sku');
+
+        $.ajax({
+            url: "{% url 'restar_producto' %}",
+            type: 'POST',
+            data: {
+                'sku': sku,
+                'csrfmiddlewaretoken': '{{ csrf_token }}'
+            },
+            success: function(response) {
+                if (response.status === 'success') {
+                    var item = $('.item[data-sku="' + sku + '"]');
+                    var cantidadSpan = item.find('.cantidad');
+                    var nuevaCantidad = parseInt(cantidadSpan.text()) - 1;
+                    if (nuevaCantidad > 0) {
+                        cantidadSpan.text(nuevaCantidad);
+                    } else {
+                        item.remove();
+                    }
+                    $('#total_precio').text(response.total_precio + ' CLP');
+                }
+            }
+        });
+    });
+});
+</script>
+{% endblock %}
