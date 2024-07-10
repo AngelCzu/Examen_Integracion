@@ -62,9 +62,7 @@ searchBtn.addEventListener("click", () => {
     sidebar.classList.remove("close");
 });
 
-product.addEventListener("click", () => {
-    sidebar.classList.remove("close");
-});
+
 
 logout.addEventListener("click", () => {
     sidebar.classList.remove("close");

@@ -4,6 +4,8 @@
 
 {% block head %}
 <link rel="stylesheet" href="{% static 'css/compras.css' %}">
+<script src="https://sdk.mercadopago.com/js/v2">
+</script>
 <title>Compras</title>
 {% endblock %}
 
@@ -23,9 +25,14 @@
     </div>
 {% else %}
     <div class="cart-container">
+        
         <div class="cart-item">
-            {% for item in productos_usuario %}
-            <div class="item" data-sku="{{ item.producto.sku }}">
+             {% for item in productos_usuario %}
+            <div class="item" data-sku="{{ item.producto.sku }}"
+                                data-nombre="{{ item.producto.nombre }}"
+                                data-cantidad="{{ item.cantidad }}"
+                                data-precio="{{ item.producto.precio }}"
+                                data-imagen="{{ item.producto.imagen.url }}">
                 <img src="{{ item.producto.imagen.url }}" alt="">
                 <div class="cart-item-details" style="width: 100%; display: flex; flex-direction: column; justify-content: center;">
                     <h3>{{ item.producto.nombre }}</h3>
@@ -47,15 +54,18 @@
             {% else %}
                 <p>{{ total }} productos</p>
             {% endif %}
-            <h4>Total: <span id="total_precio">{{ total_precio }} CLP</span></h4>
-            
+            <h4 class="total" data-total="{{ total_precio }}">Total: <span id="total_precio">{{ total_precio }} CLP</span></h4>
         </div>
+        
     </div>
+    <div id="paymentBrick_container"></div>
 {% endif %}
+
 
 {% endblock %}
 
 {% block script %}
+<script src="{% static "js/mercadopago.js" %}"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
 $(document).ready(function() {

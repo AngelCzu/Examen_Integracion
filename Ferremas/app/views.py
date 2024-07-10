@@ -1,3 +1,4 @@
+import json
 from django.http import JsonResponse
 from django.shortcuts import render
 from django.shortcuts import get_object_or_404, redirect, render
@@ -7,6 +8,7 @@ from django.contrib.auth.decorators import login_required,user_passes_test
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib import messages
 from .forms import *
+from .mercadopago import *
 import random   
 # Create your views here.
 
@@ -178,4 +180,140 @@ def comprar_producto(request):
         
         return JsonResponse({'status': 'success', 'message': 'Producto agregado al carrito', 'total_cantidad': total_cantidad})
     return JsonResponse({'status': 'error', 'message': 'Método no permitido'})
+
+
+
+
+
+#------------------------------MERCADO PAGO-------------------------------------
+@csrf_exempt
+@login_required
+def process_payment(request):
+    if request.method == "POST":
+        try:
+            print("Datos recibidos:", request.body)
+
+            form_data = json.loads(request.body)
+            transaction_amount = form_data.get("transaction_amount")
+            items = form_data.get("items")
+
+            print("Transaction amount:", transaction_amount)
+            print("Items:", items)
+
+            if items is None or transaction_amount is None:
+                return JsonResponse(
+                    {"error": "Datos incompletos en la solicitud"}, status=400
+                )
+
+            # Crear la orden
+            order = Order.objects.create(
+                user=request.user, total_amount=transaction_amount
+            )
+
+            print("Orden creada:", order)
+
+            if "compras" in request.session:
+                del request.session["compras"]
+                request.session.modified = True
+
+            for item in items:
+                print("Procesando item:", item)
+                producto = get_object_or_404(Producto, sku=item["sku"])
+                print("Producto encontrado:", producto)
+                OrderItem.objects.create(
+                    order=order,
+                    product=producto,
+                    quantity=item["cantidad"],
+                    price=item["precio"],
+                    image=item.get("imagen"),
+                )
+
+                # Decrementar el stock del producto
+                try:
+                    producto.decrementar_stock(item["cantidad"])
+                    print("Stock decrementado para el producto:", producto)
+                except ValueError as e:
+                    # Manejar el error de stock insuficiente, si es necesario
+                    return JsonResponse({"error": str(e)}, status=400)
+
+            # Actualizar estado de la orden a "procesando"
+            order.status = "processing"
+            order.save()
+            print("Estado de la orden actualizado a procesando")
+
+            # Redirigir a la página de pago exitoso con el ID de la orden
+            return JsonResponse({"redirect_url": f"/pago_exitoso/{order.id}/"})
+
+        except json.JSONDecodeError as json_error:
+            print("Error JSON:", str(json_error))
+            return JsonResponse(
+                {"error": "Error al decodificar los datos JSON"}, status=400
+            )
+        except Exception as e:
+            print("Error general:", str(e))
+            return JsonResponse({"error": str(e)}, status=500)
+
+    else:
+        return JsonResponse({"error": "Método de solicitud no permitido"}, status=405)
+
+
+@login_required
+def crear_preferencia(request):
+    if request.method == "POST":
+        data = json.loads(request.body)
+        transaction_amount = data.get("transaction_amount")
+        items = data.get("items")
+
+        print("Datos recibidos para crear preferencia:", data)
+
+        user = request.user
+        payer_info = {
+            "name": user.first_name,
+            "surname": user.last_name,
+            "email": user.email,
+        }
+
+        preference_items = []
+        for item in items:
+            preference_items.append(
+                {
+                    "title": item["nombre"],
+                    "quantity": item["cantidad"],
+                    "unit_price": item["precio"],
+                    "picture_url": item.get("imagen"),
+                }
+            )
+
+        preference_data = {
+            "items": preference_items,
+            "payer": payer_info,
+            "back_urls": {
+                "success": "http://127.0.0.1:8000/pago_exitoso/",
+                "failure": "http://127.0.0.1:8000/pago_fallido/",
+                "pending": "http://127.0.0.1:8000/pago_pendiente/",
+            },
+            "auto_return": "approved",
+        }
+
+        preference_response = sdk.preference().create(preference_data)
+        preference = preference_response["response"]
+
+        print("Preferencia creada:", preference)
+
+        return JsonResponse({"preference_id": preference["id"]})
+
+
+@login_required
+def cargar_pago_exitoso(request, order_id):
+    order = get_object_or_404(Order, id=order_id, user=request.user)
+    context = {"order": order, "items": order.items.all()}
+    return render(request, "editar", context)
+
+
+def CargarPagofallido(request):
+    return render(request, "editar")
+
+
+def CargarPagopendiente(request):
+    return render(request, "editar")
 
