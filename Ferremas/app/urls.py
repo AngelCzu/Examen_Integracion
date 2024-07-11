@@ -31,8 +31,7 @@ urlpatterns = [
     # mercadopago
     path("process_payment/", views.process_payment, name="process_payment"),
     path("crear_preferencia/", views.crear_preferencia, name="crear_preferencia"),
-    # exito en el pago
-    path(
-        "pago_exitoso/<int:order_id>/", views.cargar_pago_exitoso, name="pago_exitoso"
-    ),
+
+    # Confirmación de pago exitoso
+    path('pago_exitoso/', views.pago_exitoso, name='pago_exitoso'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

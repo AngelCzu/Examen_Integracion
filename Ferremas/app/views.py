@@ -1,3 +1,4 @@
+from django.utils import timezone
 import json
 from django.http import JsonResponse
 from django.shortcuts import render
@@ -191,35 +192,22 @@ def comprar_producto(request):
 def process_payment(request):
     if request.method == "POST":
         try:
-            print("Datos recibidos:", request.body)
-
             form_data = json.loads(request.body)
             transaction_amount = form_data.get("transaction_amount")
             items = form_data.get("items")
 
-            print("Transaction amount:", transaction_amount)
-            print("Items:", items)
-
             if items is None or transaction_amount is None:
-                return JsonResponse(
-                    {"error": "Datos incompletos en la solicitud"}, status=400
-                )
+                return JsonResponse({"error": "Datos incompletos en la solicitud"}, status=400)
 
             # Crear la orden
-            order = Order.objects.create(
-                user=request.user, total_amount=transaction_amount
-            )
-
-            print("Orden creada:", order)
+            order = Order.objects.create(user=request.user, total_amount=transaction_amount)
 
             if "compras" in request.session:
                 del request.session["compras"]
                 request.session.modified = True
 
             for item in items:
-                print("Procesando item:", item)
                 producto = get_object_or_404(Producto, sku=item["sku"])
-                print("Producto encontrado:", producto)
                 OrderItem.objects.create(
                     order=order,
                     product=producto,
@@ -229,28 +217,18 @@ def process_payment(request):
                 )
 
                 # Decrementar el stock del producto
-                try:
-                    producto.decrementar_stock(item["cantidad"])
-                    print("Stock decrementado para el producto:", producto)
-                except ValueError as e:
-                    # Manejar el error de stock insuficiente, si es necesario
-                    return JsonResponse({"error": str(e)}, status=400)
+                producto.decrementar_stock(item["cantidad"])
 
             # Actualizar estado de la orden a "procesando"
             order.status = "processing"
             order.save()
-            print("Estado de la orden actualizado a procesando")
 
-            # Redirigir a la página de pago exitoso con el ID de la orden
-            return JsonResponse({"redirect_url": f"/pago_exitoso/{order.id}/"})
+            # Redirigir a la página de pago exitoso
+            return JsonResponse({"redirect_url": f"/pago_exitoso/"})
 
         except json.JSONDecodeError as json_error:
-            print("Error JSON:", str(json_error))
-            return JsonResponse(
-                {"error": "Error al decodificar los datos JSON"}, status=400
-            )
+            return JsonResponse({"error": "Error al decodificar los datos JSON"}, status=400)
         except Exception as e:
-            print("Error general:", str(e))
             return JsonResponse({"error": str(e)}, status=500)
 
     else:
@@ -304,10 +282,26 @@ def crear_preferencia(request):
 
 
 @login_required
-def cargar_pago_exitoso(request, order_id):
-    order = get_object_or_404(Order, id=order_id, user=request.user)
+def pago_exitoso(request):
+    carrito = Carrito.objects.filter(usuario=request.user)
+    total_precio = sum(item.producto.precio * item.cantidad for item in carrito)
+
+    # Obtener la fecha y hora actual
+    ahora = timezone.now()
+
+    # Aquí puedes agregar lógica adicional para manejar el pago y limpiar el carrito
+    # Por ejemplo, puedes mover los productos del carrito a un modelo de órdenes y limpiar el carrito
+
+    # Borrar el carrito después del pago exitoso
+    carrito.delete()
+    order = get_object_or_404(Order, sku=order_id, user=request.user)
     context = {"order": order, "items": order.items.all()}
-    return render(request, "editar", context)
+    return render(request, 'pago_exitoso.html', {
+        'usuario': request.user,
+        'carrito': carrito,
+        'total_precio': total_precio,
+        'ahora': ahora
+    })
 
 
 def CargarPagofallido(request):

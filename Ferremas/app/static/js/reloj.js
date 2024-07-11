@@ -22,15 +22,9 @@ const reloj = setInterval(() => {
         ampm = local.getHours();
 
 
-        /*Formato para AM o PM*/
-        if (horas >= 12) {
-            horas = horas - 12;
-            ampm = 'PM';
-        }else{
-            ampm = 'AM';
-        }
+      
 
-        hora.innerHTML = local.toLocaleTimeString() + ` ${ampm}`;
+        hora.innerHTML = local.toLocaleTimeString();
         fecha.innerHTML = `${diasSemana[diaSemana]}, ${dia} de ${meses[mes]}  de ${anio}`;
 
 }, 1);

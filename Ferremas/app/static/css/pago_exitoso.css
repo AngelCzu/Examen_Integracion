@@ -1,0 +1,78 @@
+.boleta-container {
+    width: 60%;
+    margin: 0 auto;
+    text-align: center;
+    padding: 20px;
+    background: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    margin-top: 20px;
+}
+
+.boleta-container h1 {
+    font-size: 2.5em;
+    margin-bottom: 0.5em;
+    color: #4CAF50;
+}
+
+.boleta-container h2 {
+    font-size: 1.5em;
+    margin-bottom: 1em;
+    color: #333;
+}
+
+.boleta-container p {
+    font-size: 1.2em;
+    margin-bottom: 0.5em;
+    color: #666;
+}
+
+.boleta-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.boleta-table th, .boleta-table td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: left;
+}
+
+.boleta-table th {
+    background-color: #f2f2f2;
+    color: #333;
+    font-weight: bold;
+}
+
+.boleta-table td {
+    background-color: #fff;
+    color: #333;
+}
+
+.boleta-table tr:nth-child(even) td {
+    background-color: #f9f9f9;
+}
+
+.boleta-table tr:hover td {
+    background-color: #f1f1f1;
+}
+
+.boleta-table th, .boleta-table td {
+    text-align: center;
+    vertical-align: middle;
+}
+
+.boleta-table tfoot td {
+    font-weight: bold;
+}
+
+@media (max-width: 768px) {
+    .boleta-container {
+        width: 90%;
+    }
+
+    .boleta-table th, .boleta-table td {
+        padding: 8px;
+    }
+}
