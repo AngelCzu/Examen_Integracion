@@ -25,10 +25,10 @@ password: admin
 
 ## Screenshots
 
-![Home](docs/home.png)
-![Catalogo](docs/catalogo.png)
-![Carrito](docs/carrito.png)
-![Agregar Producto](docs/agregar_producto.png)
+![Home](Ferremas/docs/home.png)
+![Catalogo](Ferremas/docs/catalogo.png)
+![Carrito](Ferremas/docs/carrito.png)
+![Agregar Producto](Ferremas/docs/agregar_producto.png)
 
 ---
 
