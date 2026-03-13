@@ -25,12 +25,12 @@
             </tr>
         </thead>
         <tbody>
-            {% for item in carrito %}
+            {% for item in items %}
             <tr>
-                <td>{{ item.producto.nombre }}</td>
-                <td>{{ item.cantidad }}</td>
-                <td>{{ item.producto.precio }} CLP</td>
-                <td>{{ item.producto.precio|multiply:item.cantidad }} CLP</td>
+                <td>{{ item.product.nombre }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>{{ item.price }} CLP</td>
+                <td>{{ item.price|multiply:item.quantity }} CLP</td>
             </tr>
             {% endfor %}
             <tr>

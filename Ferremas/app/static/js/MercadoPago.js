@@ -14,7 +14,8 @@ function getCookie(name) {
 }
 
 const csrftoken = getCookie('csrftoken');
-const totalConIva = parseFloat(document.querySelector('.total').dataset.total);
+const totalElement = document.querySelector('.total');
+const totalConIva = totalElement ? parseFloat(totalElement.dataset.total) : 0;
 
 const carritoItems = [];
 document.querySelectorAll('.item').forEach(item => {
@@ -32,6 +33,10 @@ const mp = new MercadoPago('TEST-021dcf1f-ec2f-4f9f-aa82-1f57c175d50c', {
 });
 const bricksBuilder = mp.bricks();
 const renderPaymentBrick = async (bricksBuilder) => {
+    if (!totalElement || carritoItems.length === 0) {
+        return;
+    }
+
     fetch('/crear_preferencia/', {
         method: 'POST',
         headers: {
@@ -43,11 +48,12 @@ const renderPaymentBrick = async (bricksBuilder) => {
             items: carritoItems
         })
     })
-        .then(response => {
+        .then(async response => {
+            const data = await response.json();
             if (!response.ok) {
-                throw new Error('Error al crear la preferencia de pago');
+                throw new Error(data.error || 'Error al crear la preferencia de pago');
             }
-            return response.json();
+            return data;
         })
         .then(data => {
             console.log('Respuesta de crear_preferencia:', data);
