@@ -50,6 +50,23 @@ Servicios externos
 
 ---
 
+## Arquitectura
+
+La aplicación sigue una arquitectura basada en el framework Django.
+
+Cliente (HTML / Bootstrap / JavaScript)
+        ↓
+Django Views
+        ↓
+Modelos ORM
+        ↓
+SQLite Database
+
+Para el procesamiento de pagos se integra la API de Mercado Pago
+mediante generación de preferencias de pago y redirección al checkout.
+
+---
+
 ## Desafíos técnicos
 
 - Integración de Mercado Pago para generar preferencias de pago.
@@ -87,4 +104,8 @@ python manage.py runserver
 ## Autor
 
 Angel Gabriel Cea Zúñiga
+
 Desarrollador de Software Junior
+Ingeniería en Informática – Duoc UC
+
+GitHub: https://github.com/AngelCzu
