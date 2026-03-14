@@ -7,7 +7,7 @@ Incluye catálogo de productos, autenticación de usuarios, carrito de compras y
 ## Demo
 
 **Aplicación en vivo:**  
-https://ferremas.onrender.com
+https://examen-integracion.onrender.com/
 
 ### Credenciales de prueba
 
